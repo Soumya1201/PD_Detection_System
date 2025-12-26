@@ -155,12 +155,12 @@ with st.sidebar:
     )
     st.markdown("---")
     menu = st.radio("Navigation", [
-        "🌟 Project Overview",
-        "🌀 Spiral Diagnosis",
-        "🌊 Wave Diagnosis",
-        "🎤 Voice Analysis",
-        "📜 History Tracker",
-        "📊 Clinical Report"
+        "Project Overview",
+        "Spiral Diagnosis",
+        "Wave Diagnosis",
+        "Voice Analysis",
+        "History Tracker",
+        "Clinical Report"
     ])
     st.markdown("---")
     st.info("System v3.1 | XAI Enabled")
@@ -170,7 +170,7 @@ with st.sidebar:
 # =====================================================
 
 # --- 1. PROJECT OVERVIEW (SMALLER PICTURE) ---
-if menu == "🌟 Project Overview":
+if menu == "Project Overview":
     st.markdown("<h1 class='hero-text'>Parkinson's Disease Prediction System</h1>", unsafe_allow_html=True)
     st.markdown("<p style='text-align:center; font-size:1.1rem; color:#9CA3AF; margin-bottom:20px;'>Multi-Modal Deep Learning for Early PD Biomarker Detection</p>", unsafe_allow_html=True)
     
@@ -190,17 +190,17 @@ if menu == "🌟 Project Overview":
         st.markdown("<div class='feature-card'><h4 style='color:#10B981;'>💡 Explainability</h4><p style='font-size:0.9rem;'><b>Grad-CAM</b> visualizations provide clinical evidence by highlighting precisely where the model detects biomarkers.</p></div>", unsafe_allow_html=True)
 
 # --- 2. DIAGNOSTIC MODULES ---
-elif menu in ["🌀 Spiral Diagnosis", "🌊 Wave Diagnosis", "🎤 Voice Analysis"]:
+elif menu in ["Spiral Diagnosis", "Wave Diagnosis", "Voice Analysis"]:
     config = {
-        "🌀 Spiral Diagnosis": ("spiral", (128,128), ["png","jpg","jpeg"]),
-        "🌊 Wave Diagnosis": ("wave", (128,128), ["png","jpg","jpeg"]),
-        "🎤 Voice Analysis": ("voice", None, ["wav"])
+        "Spiral Diagnosis": ("spiral", (128,128), ["png","jpg","jpeg"]),
+        "Wave Diagnosis": ("wave", (128,128), ["png","jpg","jpeg"]),
+        "Voice Analysis": ("voice", None, ["wav"])
     }
     key, size, ftypes = config[menu]
     st.title(menu)
     file = st.file_uploader(f"Upload Patient Data", type=ftypes)
     
-    if file and st.button("🚀 Run Diagnosis"):
+    if file and st.button("Run Diagnosis"):
         if key == "voice":
             img = audio_to_spectrogram(file); arr = img[None, ...]
         else:
@@ -220,7 +220,7 @@ elif menu in ["🌀 Spiral Diagnosis", "🌊 Wave Diagnosis", "🎤 Voice Analys
         st.session_state['history'].append(new_record)
 
         # UI
-        st.markdown("### 🔍 XAI Visualization")
+        st.markdown("### XAI Visualization")
         c1, c2, c3 = st.columns(3)
         c1.image(arr[0], caption="Input Sample", use_container_width=True)
         with c2:
@@ -235,16 +235,16 @@ elif menu in ["🌀 Spiral Diagnosis", "🌊 Wave Diagnosis", "🎤 Voice Analys
         st.download_button("📄 Download Medical Record (.txt)", export_record(new_record), f"PD_Record_{p_name}.txt")
 
 # --- 3. HISTORY TRACKER ---
-elif menu == "📜 History Tracker":
-    st.title("📜 Patient Analysis History")
+elif menu == "History Tracker":
+    st.title("Patient Analysis History")
     if not st.session_state['history']: st.info("No records found in this session.")
     else:
         st.table(pd.DataFrame(st.session_state['history']))
-        if st.button("🗑️ Clear All Records"): st.session_state['history'] = []; st.rerun()
+        if st.button("Clear All Records"): st.session_state['history'] = []; st.rerun()
 
 # --- 4. CLINICAL REPORT ---
-elif menu == "📊 Clinical Report":
-    st.markdown("<h2 style='color: #60A5FA;'>📊 Clinical Performance & Validation</h2>", unsafe_allow_html=True)
+elif menu == "Clinical Report":
+    st.markdown("<h2 style='color: #60A5FA;'>Clinical Performance & Validation</h2>", unsafe_allow_html=True)
     m1, m2, m3 = st.columns(3)
     m1.metric("Avg Accuracy", "87.0%", "Validated")
     m2.metric("Voice Recall", "95.0%", "Peak Sensitivity")
